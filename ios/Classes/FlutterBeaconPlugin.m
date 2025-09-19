@@ -342,6 +342,7 @@
 ///------------------------------------------------------------
 
 - (void) startMonitoringBeaconWithCall:(id)arguments {
+    self.locationManager.allowsBackgroundLocationUpdates = false;
     if (self.regionMonitoring) {
         [self.regionMonitoring removeAllObjects];
     } else {
@@ -353,6 +354,9 @@
         CLBeaconRegion *region = [FBUtils regionFromDictionary:dict];
         
         if (region) {
+            region.notifyOnEntry = YES;
+            region.notifyOnExit = NO;
+            region.notifyEntryStateOnDisplay = NO;
             [self.regionMonitoring addObject:region];
         }
     }
